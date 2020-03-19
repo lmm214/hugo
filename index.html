@@ -1,63 +1,104 @@
 <!DOCTYPE html>
-<html lang="en-US">
-<head>
-<meta charset="utf-8">
-<meta name="generator" content="Hugo 0.67.1" />
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="//fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
-<link rel="stylesheet" href="/css/normalize.css">
-<link rel="stylesheet" href="/css/skeleton.css">
-<link rel="stylesheet" href="/css/custom.css">
-<link rel="alternate" href="/index.xml" type="application/rss+xml" title="My New Hugo Site">
-<title>My New Hugo Site</title>
-</head>
-<body>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <title>My New Hugo Site - My New Hugo Site</title>
+    
+    <meta name="description" content="">
+    <meta name="author" content="">
+    
+    <link href="https://lmm214.github.io/hugo/an-old-hope.min.css" rel="stylesheet">
+    <link href="https://lmm214.github.io/hugo/style.css" rel="stylesheet">
+    
+    <link rel="apple-touch-icon" href="https://lmm214.github.io/hugo/apple-touch-icon.png">
+    <link rel="icon" href="https://lmm214.github.io/hugo/favicon.ico">
+    <meta name="generator" content="Hugo 0.67.1" />
+    
+    <link rel="alternate" type="application/atom+xml" href="https://lmm214.github.io/hugo/index.xml" title="My New Hugo Site">
+    
+    
+    <script>
+      function setTheme() {
+        const time = new Date();
 
-<div class="container">
+        const prev = localStorage.getItem('date');
+        const date = String(time.getMonth() + 1) + '.' + String(time.getDate());
 
-	<header role="banner">
-		<div class="header-logo">
-			<a href="/"><img src="" width="60" height="60" alt="My New Hugo Site"></a>
-		</div>
-		<h1 class="site-title">My New Hugo Site</h1>
-	</header>
+        const now = time.getTime();
+        let sunrise;
+        let sunset;
 
+        function setBodyClass() {
+          if (now > sunrise && now < sunset) return;
+          document.body.classList.add('dark');
+        }
 
-	<main role="main">
+        if (date !== prev) {
+          fetch('https://api.ipgeolocation.io/astronomy?apiKey=5ed37d85103e4defa5df4c5298ed5215')
+            .then(res => res.json())
+            .then(data => {
+              sunrise = data.sunrise.split(':').map(Number);
+              sunset = data.sunset.split(':').map(Number);
+            })
+            .catch(() => {
+              sunrise = [7, 0];
+              sunset = [19, 0];
+            })
+            .finally(() => {
+              sunrise = time.setHours(sunrise[0], sunrise[1], 0);
+              sunset = time.setHours(sunset[0], sunset[1], 0);
+              setBodyClass();
+              localStorage.setItem('sunrise', sunrise);
+              localStorage.setItem('sunset', sunset);
+            });
+          localStorage.setItem('date', date);
+        } else {
+          sunrise = Number(localStorage.getItem('sunrise'));
+          sunset = Number(localStorage.getItem('sunset'));
+          setBodyClass();
+        }
+      }
+    </script>
+  </head>
+  <body class="list home">
+    <script>
+      setTheme();
+    </script>
+    <header class="header">
+      <nav class="nav">
+        <h1 class="logo"><a href="https://lmm214.github.io/hugo/">My New Hugo Site</a></h1>
+      </nav>
+    </header>
+    <main class="main">
 
-		<article itemscope itemtype="http://schema.org/Blog">
-			<h2 class="entry-title" itemprop="headline"><a href="/hugo/post/">Posts</a></h2>
-			<span class="entry-meta"><time itemprop="datePublished" datetime="2020-03-19">March 19, 2020</time></span>
-		</article>
+<header class="page-header"><h1>My New Hugo Site</h1></header>
 
-		<article itemscope itemtype="http://schema.org/Blog">
-			<h2 class="entry-title" itemprop="headline"><a href="/hugo/about/">About</a></h2>
-			<span class="entry-meta"><time itemprop="datePublished" datetime="2020-03-19">March 19, 2020</time></span>
-		</article>
-
-	</main>
-
-
-	<footer role="contentinfo">
-		<div class="hr"></div>
-		<div class="footer-link">
-			
-			
-			
-			
-			
-		</div>
-		<div class="copyright">Copyright &copy; </div>
-	</footer>
-
-</div>
-
-
-
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
-
+<article class="first-entry">
+  <header class="entry-header">
+    <h2>About</h2>
+  </header>
+  <section class="entry-content">
+   <p>123...</p>
+  </section>
+  <footer class="entry-footer">
+    <time>March 19, 2020</time>
+  </footer>
+  <a class="entry-link" href="https://lmm214.github.io/hugo/about/"></a>
+</article></main>
+<footer class="footer">
+  <span>&copy; 2020 <a href="https://lmm214.github.io/hugo/">My New Hugo Site</a></span>
+  <span>&middot;</span>
+  <span>Powered by <a href="https://gohugo.io/" rel="noopener" target="_blank">Hugo️️</a>️</span>
+  <span>&middot;</span>
+  <span>Theme️ <a href="https://github.com/nanxiaobei/hugo-paper" rel="noopener" target="_blank">Paper</a></span>
+</footer>
+<script src="https://lmm214.github.io/hugo/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
 </body>
 </html>
 
